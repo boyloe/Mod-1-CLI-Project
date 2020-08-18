@@ -12,7 +12,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
-    addressable (2.3.8)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     i18n (1.7.0)
@@ -57,10 +56,6 @@ GEM
     tty-screen (0.8.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    unirest (1.1.2)
-      addressable (~> 2.3.5)
-      json (~> 1.8.1)
-      rest-client (~> 1.6.7)
     wisper (2.0.1)
     zeitwerk (2.2.2)
 
@@ -69,13 +64,14 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 6.0)
+  json
   pry (~> 0.12.2)
   rake (~> 13.0)
   require_all (~> 3.0)
+  rest-client
   sinatra-activerecord (~> 2.0)
   sqlite3 (~> 1.4)
   tty-prompt
-  unirest
 
 BUNDLED WITH
    2.1.4
