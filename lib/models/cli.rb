@@ -30,11 +30,16 @@ class Cli
       when "find a recipe" 
         # recipe_finder 
         proteins = ['chicken','beef','pork','fish']
-        protein_prompt = prompt.select("What would you like to eat")
+        protein_prompt = prompt.select("What would you like to eat?",proteins)
+        recipes = Recipe.where('ingredients LIKE ?', "%#{protein_prompt}%")
+        recipe_names = recipes.map do |recipe|
+          recipe.name
+        end
+        recipe_prompt = prompt.select("Found Recipes", recipe_names)
         binding.pry
-        recipes = Recipe.where(ingredient: "%#{protein_prompt}%")
-        recipe_prompt = prompt.select("Found Recipes", recipes)
-
+        #Ask something here about adding to favorites, y/n?
+        #Then call favorites if answer is yes
+       
 
       when "favorites"
         favorites_list
