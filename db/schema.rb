@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2020_08_18_190007) do
 
   create_table "Users", force: :cascade do |t|
-    t.string "name"
     t.string "username"
   end
 
