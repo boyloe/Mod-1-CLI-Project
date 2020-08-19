@@ -24,14 +24,17 @@ class Cli
 
   def menu 
       prompt = TTY::Prompt.new
-      menu_options = ["create new recipe", "find a recipe", "favorites", "exit"]
+      menu_options = ["find a recipe", "favorites", "exit"]
       menu_prompt = prompt.select("menu", menu_options)
-      case menu_selection
-      when "create new recipe"
-        create_recipe
-      
+      case menu_prompt      
       when "find a recipe" 
-        recipe_finder 
+        # recipe_finder 
+        proteins = ['chicken','beef','pork','fish']
+        protein_prompt = prompt.select("What would you like to eat")
+        binding.pry
+        recipes = Recipe.where(ingredient: "%#{protein_prompt}%")
+        recipe_prompt = prompt.select("Found Recipes", recipes)
+
 
       when "favorites"
         favorites_list
@@ -64,7 +67,6 @@ class Cli
             # main_menu
           end
     end
-
     # def find_new_recipe 
     #   prompt = TTY::Prompt.new
     #   protein = prompt.select('What protein would you like?',%w(beef, pork, chicken, fish))
