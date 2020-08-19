@@ -12,20 +12,20 @@
 
 ActiveRecord::Schema.define(version: 2020_08_18_190007) do
 
-  create_table "Users", force: :cascade do |t|
-    t.string "username"
-  end
-
   create_table "recipes", force: :cascade do |t|
     t.string "name"
     t.string "ingredients"
   end
 
-  create_table "userrecipes", force: :cascade do |t|
+  create_table "user_recipes", force: :cascade do |t|
     t.integer "user_id"
     t.integer "recipe_id"
-    t.index ["recipe_id"], name: "index_userrecipes_on_recipe_id"
-    t.index ["user_id"], name: "index_userrecipes_on_user_id"
+    t.index ["recipe_id"], name: "index_user_recipes_on_recipe_id"
+    t.index ["user_id"], name: "index_user_recipes_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
   end
 
 end
