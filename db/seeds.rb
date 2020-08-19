@@ -4,10 +4,7 @@ require 'pry'
 
 
 
-# #response = RestClient.get("https://api.edamam.com/search?q=beef&app_id=321076cb&app_key=6dd56cb4f4320dffe50f4b2fcaf529bd&from=0&to=5")
-# response = RestClient.get("recipepuppy.com/api/?i=#{protein},#{flavor},#{seasoning}")
 
-# data = JSON.parse(response)
 # #use enumerables to map through data to find what you want to get
 # #in the map, you can call the .create method and save to database
 # #Character.create
@@ -26,6 +23,29 @@ UserRecipe.create(user: bradley , recipe: teryaki_beef)
 UserRecipe.create(user: bryan , recipe: teryaki_beef)
 UserRecipe.create(user: bryan , recipe: grilled_italian_chicken)
 
+def get_recipes
+      response = RestClient.get("recipepuppy.com/api/?i=#{protein}")
+      data = JSON.parse(response) 
+      
 
+      recipe_titles = data['results'].map do |result|
+          result['title'].gsub("\n","")
+      end
+
+      new_recipe = prompt.select('Which recipe would you like to add?', recipe_titles)
+      
+      i = 0
+      while i < data['results'].length do
+        if data['results'][i]['title'].gsub("\n","") == new_recipe
+          recipe_ingredients = data['results'][i]['ingredients']
+          recipe_website = data['results'][i]['href']
+          break
+        else
+            i += 1
+        end
+      end
+      rec1 = Recipe.create(name: new_recipe, ingredients: recipe_ingredients)
+      binding.pry
+    end
 
 
