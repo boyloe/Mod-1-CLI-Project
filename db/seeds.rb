@@ -24,28 +24,17 @@ UserRecipe.create(user: bryan , recipe: teryaki_beef)
 UserRecipe.create(user: bryan , recipe: grilled_italian_chicken)
 
 def get_recipes
-      response = RestClient.get("recipepuppy.com/api/?i=#{protein}")
-      data = JSON.parse(response) 
-      
-
-      recipe_titles = data['results'].map do |result|
-          result['title'].gsub("\n","")
-      end
-
-      new_recipe = prompt.select('Which recipe would you like to add?', recipe_titles)
-      
-      i = 0
-      while i < data['results'].length do
-        if data['results'][i]['title'].gsub("\n","") == new_recipe
-          recipe_ingredients = data['results'][i]['ingredients']
-          recipe_website = data['results'][i]['href']
-          break
-        else
-            i += 1
+    proteins = ['chicken', 'beef','pork','fish']
+    proteins.map do |protein|
+        response = RestClient.get("recipepuppy.com/api/?q=#{protein}")
+        data = JSON.parse(response) 
+        data['results'].map do |result|
+            recipe_name = result['title']
+            recipe_ingredients= result['ingredients']
+            Recipe.create(name: recipe_name, ingredients: recipe_ingredients)
         end
-      end
-      rec1 = Recipe.create(name: new_recipe, ingredients: recipe_ingredients)
-      binding.pry
     end
+end
+get_recipes
 
 
