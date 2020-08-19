@@ -16,9 +16,14 @@ UserRecipe.destroy_all
 bryan = User.create(username: 'Bryan')
 bradley = User.create(username: 'Bradley')
 
-UserRecipe.create(user: bradley , recipe: Recipe.first)
-UserRecipe.create(user: bryan , recipe: Recipe.first)
-UserRecipe.create(user: bryan , recipe: Recipe.second)
+beefteriyaki = Recipe.create(name: "Beef Teryaki", ingredients: "Beef")
+chickennuggets = Recipe.create(name: "Chicken Nuggets", ingredients: "Chicken, Salt")
+
+UserRecipe.create(user: bradley , recipe: beefteriyaki)
+UserRecipe.create(user: bryan , recipe: beefteriyaki)
+UserRecipe.create(user: bryan , recipe: chickennuggets)
+
+
 
 def get_recipes
     proteins = ['chicken', 'beef','pork','fish']
