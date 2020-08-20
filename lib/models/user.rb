@@ -39,15 +39,18 @@ class User < ActiveRecord::Base
         prompt = TTY::Prompt.new
         menu_options = ["Find a New Recipe", "Show My Favorites","Update User", "Exit"]
         menu_prompt = prompt.select("How Can I Help You Today?\n", menu_options)
+        sleep(1)
         case menu_prompt      
         when "Find a New Recipe" 
-            proteins = ['chicken','beef','pork','fish']
-            protein_prompt = prompt.select("What would you like to eat?",proteins)
+            system "clear"
+
+            proteins = ['Chicken','Beef','Pork','Fish']
+            protein_prompt = prompt.select("What would you like to eat?\n",proteins)
             recipes = Recipe.where('ingredients LIKE ?', "%#{protein_prompt}%")
             recipe_names = recipes.map do |recipe|
                 recipe.name
             end
-            recipe_prompt = prompt.select("Found Recipes", recipe_names)
+            recipe_prompt = prompt.select("Ok, I found these delicious recipes. Which one looks good to you?", recipe_names)
             
             if prompt.yes?('Do you want add this to your Favorites?')            
                 add_favorites(recipe_prompt)
@@ -65,7 +68,7 @@ class User < ActiveRecord::Base
             User.update_user
 
         when "Exit"
-            puts "Goodbye #{self.name}!"
+            puts "Goodbye #{self.username}!"
             sleep(2)
             system "exit"  
         end
