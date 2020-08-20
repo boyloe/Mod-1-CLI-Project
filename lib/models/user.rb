@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
             recipe_names = recipes.map do |recipe|
                 recipe.name
             end
-            recipe_prompt = prompt.select("Ok, I found these delicious recipes. Which one looks good to you?", recipe_names)
+            recipe_prompt = prompt.select("Ok, I found these delicious recipes. Which one looks good to you?\n", recipe_names)
             
             if prompt.yes?('Do you want add this to your Favorites?')            
                 add_favorites(recipe_prompt)
