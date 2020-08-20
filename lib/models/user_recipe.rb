@@ -8,15 +8,13 @@ class UserRecipe < ActiveRecord::Base
         favorite = find_by(user_id: user.id, recipe_id: recipe.id)
         if !favorite
             UserRecipe.create(user_id: user.id, recipe_id: recipe.id)
-            puts "Recipe has been saved"
-            binding.pry
-            menu
+            puts "Recipe has been saved"           
         else
             puts "This recipe is already in your favorites list!"
-            binding.pry
-            system "clear"
-            menu    
+            
+            system "clear"                
         end
+        user.menu
     end
 
     def self.get_user_favorites username
