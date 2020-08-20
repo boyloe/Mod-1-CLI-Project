@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
         if @user
             prompt = TTY::Prompt.new
             system("clear")
-            puts "Welcome back, #{@user.username}\n\n"
+            puts "Welcome back, #{@user.username}!\n\n"
             sleep(1)            
             @user.menu              
         else
@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
         
         when "Show My Favorites"
             sleep(1)
+            system "clear"
             list_favorites
 
         when "Update User"
@@ -70,7 +71,7 @@ class User < ActiveRecord::Base
         when "Exit"
             puts "Goodbye #{self.username}!"
             sleep(2)
-            system "exit"  
+            system "exit!"  
         end
     end
 
@@ -82,12 +83,19 @@ class User < ActiveRecord::Base
 
     def list_favorites        
         favorites = UserRecipe.get_user_favorites self
+        if favorites.empty?
+            puts "You currently don't have any favorite recipes saved."
+            sleep(1)
+            system "clear"
+            menu
+        else
         recipe_names = favorites.map do |favorite|
             Recipe.find_by(id: favorite.recipe_id).name
+            end
         end
         prompt = TTY::Prompt.new
-        favs_options = ["Delete a Recipe","Return to Main Menu"]
-        response = prompt.select("\n\nWhat would you like to do?", favs_options)
+        favs_options = ["Check Ingredients","Delete a Recipe","Return to Main Menu"]
+        response = prompt.select("\n\nWhat would you like to do?\n", favs_options)
         case response
             when "Return to Main Menu"
                 sleep(1)
@@ -96,12 +104,19 @@ class User < ActiveRecord::Base
             when "Delete a Recipe"
                 sleep(1)
                 system "clear"
-                recipe_to_delete = prompt.select("Which recipe do you want to delete?",recipe_names)                
+                recipe_to_delete = prompt.select("Which recipe do you want to delete?\n",recipe_names)                
                 found_favorite = Recipe.find_by(name: recipe_to_delete).id
                 UserRecipe.find_by(recipe_id: found_favorite, user_id: self).destroy
                 sleep(1)
                 system "clear"
-                menu
+                list_favorites
+            when "Check Ingredients"
+                system "clear"
+                recipe_to_check = prompt.select("Which recipe's ingredients do you want to see?\n",recipe_names)                
+                ingredients = Recipe.find_by(name: recipe_to_check).ingredients
+                puts "#{recipe_to_check.colorize(:yellow)}: #{ingredients}\n\n"
+                sleep(5)
+                list_favorites                
         end
     end    
 end
