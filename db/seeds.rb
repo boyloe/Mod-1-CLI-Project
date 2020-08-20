@@ -33,7 +33,8 @@ def get_recipes
         data['results'].map do |result|
             recipe_name = result['title']
             recipe_ingredients= result['ingredients']
-            Recipe.create(name: recipe_name, ingredients: recipe_ingredients)
+            recipe_url = result['href']
+            Recipe.create(name: recipe_name, ingredients: recipe_ingredients, href: recipe_url)
         end
     end
 end
