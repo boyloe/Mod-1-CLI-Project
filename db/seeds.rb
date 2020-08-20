@@ -13,15 +13,15 @@ User.destroy_all
 Recipe.destroy_all
 UserRecipe.destroy_all
 
-bryan = User.create(username: 'Bryan')
-bradley = User.create(username: 'Bradley')
+# bryan = User.create(username: 'Bryan')
+# bradley = User.create(username: 'Bradley')
 
-beefteriyaki = Recipe.create(name: "Beef Teryaki", ingredients: "Beef")
-chickennuggets = Recipe.create(name: "Chicken Nuggets", ingredients: "Chicken, Salt")
+# beefteriyaki = Recipe.create(name: "Beef Teryaki", ingredients: "Beef")
+# chickennuggets = Recipe.create(name: "Chicken Nuggets", ingredients: "Chicken, Salt")
 
-UserRecipe.create(user: bradley , recipe: beefteriyaki)
-UserRecipe.create(user: bryan , recipe: beefteriyaki)
-UserRecipe.create(user: bryan , recipe: chickennuggets)
+# UserRecipe.create(user: bradley , recipe: beefteriyaki)
+# UserRecipe.create(user: bryan , recipe: beefteriyaki)
+# UserRecipe.create(user: bryan , recipe: chickennuggets)
 
 
 
