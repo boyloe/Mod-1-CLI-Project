@@ -29,11 +29,11 @@ class User < ActiveRecord::Base
         @user.update(username: new_name)
         puts "Your username has been updated."
         @user.menu
-        binding.pry
+        
     end
 
     def self.create_new_user(user)
-        binding.pry
+        
         @user = create(username: user)
         puts "Welcome to Recipe #{@user.username}"
         @user.menu    
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
           
           if prompt.yes?('Do you want add this to your Favorites?')            
              add_favorites(recipe_prompt)
-             binding.pry
+             
           else        
              menu    
           end
@@ -90,11 +90,11 @@ class User < ActiveRecord::Base
             when "delete"
                 puts "Which favorite would you like to delete?"
                 this_one = gets.strip
-                binding.pry
+                
                 found_fav = Recipe.find_by(name: this_one).id
                 UserRecipe.find_by(recipe_id: found_fav, user_id: self).destroy
-        # system "clear"
-        # main_menu
+                 system "clear"
+                menu
         end
     end    
 end
