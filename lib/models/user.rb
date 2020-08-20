@@ -11,12 +11,12 @@ class User < ActiveRecord::Base
             prompt = TTY::Prompt.new
             system("clear")
             puts "Welcome back, #{@user.username}"
-            update = prompt.ask('Would you like to update your username?')
-            if update
-                update_user
-            else 
+            #update = prompt.ask('Would you like to update your username?'
+            #if prompt.yes?("Would you like to update your username?")
+                #update_user
+            #else 
                 @user.menu   
-            end
+            #end
             
         else
             create_new_user(user_input)
@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
 
     def menu 
         prompt = TTY::Prompt.new
-        menu_options = ["find a recipe", "favorites", "exit"]
+        menu_options = ["find a recipe", "favorites","update user", "exit"]
         menu_prompt = prompt.select("menu", menu_options)
         case menu_prompt      
         when "find a recipe" 
@@ -62,7 +62,10 @@ class User < ActiveRecord::Base
         
         when "favorites"
             list_favorites
-        
+
+        when "update user"
+           User.update_user
+
         when "exit"
             system "exit"    
 
@@ -87,8 +90,9 @@ class User < ActiveRecord::Base
             when "delete"
                 puts "Which favorite would you like to delete?"
                 this_one = gets.strip
+                binding.pry
                 found_fav = Recipe.find_by(name: this_one).id
-                UserRecipe.find_by(recipe_id: found_fav, user_id: @user.id).destroy
+                UserRecipe.find_by(recipe_id: found_fav, user_id: self).destroy
         # system "clear"
         # main_menu
         end
