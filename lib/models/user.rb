@@ -25,8 +25,7 @@ class User < ActiveRecord::Base
 
     def self.update_user         
         puts "What would you like to change your username to?"
-        new_name = gets.strip
-        
+        new_name = gets.strip        
         @user.update(username: new_name)
         puts "Your username has been updated."
         @user.menu
