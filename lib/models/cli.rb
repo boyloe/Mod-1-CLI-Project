@@ -9,7 +9,7 @@ class Cli
   def self.login
     puts "Welcome to Recipe"
     sleep(2)
-    puts "Enter your Username"
+    puts "Please Enter your Username:"
     username = gets.strip
     system "clear"
     User.find_user username    
