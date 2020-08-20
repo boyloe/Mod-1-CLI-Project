@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
             end
         end
         prompt = TTY::Prompt.new
-        favs_options = ["Check Ingredients","Delete a Recipe","Return to Main Menu"]
+        favs_options = ["Check Ingredients","Display Recipe Source URL","Delete a Recipe","Return to Main Menu"]
         response = prompt.select("\n\nWhat would you like to do?\n", favs_options)
         case response
             when "Return to Main Menu"
@@ -114,10 +114,19 @@ class User < ActiveRecord::Base
                 system "clear"
                 recipe_to_check = prompt.select("Which recipe's ingredients do you want to see?\n",recipe_names)                
                 ingredients = Recipe.find_by(name: recipe_to_check).ingredients
-                puts "#{recipe_to_check.colorize(:yellow)}: #{ingredients}\n\n"
+                puts "#{recipe_to_check.colorize(:yellow)}: #{ingredients.colorize(:cyan)}\n\n"
                 sleep(5)
-                list_favorites                
+                list_favorites
+
+            when "Display Recipe Source URL"
+                system "clear"
+                recipe_to_check = prompt.select("Which recipe's URL do you want to see?\n",recipe_names)                
+                url = Recipe.find_by(name: recipe_to_check).href
+                puts "#{recipe_to_check.colorize(:yellow)}: #{url.colorize(:cyan)}\n\n"
+                sleep(5)
+                list_favorites
         end
+
     end    
 end
 
