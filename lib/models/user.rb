@@ -8,17 +8,35 @@ class User < ActiveRecord::Base
 
         # Conditional statement: If user exists, bring user to main menu; else initiate User.create_user
         if @user
+            prompt = TTY::Prompt.new
             system("clear")
             puts "Welcome back, #{@user.username}"
-            @user.menu
+            update = prompt.ask('Would you like to update your username?')
+            if update
+                update_user
+            else 
+                @user.menu   
+            end
+            
         else
             create_new_user(user_input)
         end
     end
 
+    def self.update_user         
+        puts "What would you like to change your username to?"
+        new_name = gets.strip
+        
+        @user.update(username: new_name)
+        puts "Your username has been updated."
+        @user.menu
+        binding.pry
+    end
+
     def self.create_new_user(user)
+        binding.pry
         @user = create(username: user)
-        puts "Welcome to Recipe #{username.user}"
+        puts "Welcome to Recipe #{@user.username}"
         @user.menu    
     end
 
@@ -54,13 +72,13 @@ class User < ActiveRecord::Base
 
     def add_favorites(recipe_prompt)
         favorited_recipe = Recipe.find_by(name: recipe_prompt)
-        UserRecipe.create_new_favorite(user: self, recipe: favorited_recipe)
-        binding.pry
+        UserRecipe.create_favorite_recipe(self, favorited_recipe)
+        
         list_favorites
     end
 
     def list_favorites
-        puts favs_list
+        UserRecipe.get_user_favorites self
         prompt = TTY::Prompt.new
         favs_options = ["return to main menu", "delete"]
         response = prompt.select("Favorites", favs_options)
@@ -71,7 +89,7 @@ class User < ActiveRecord::Base
                 puts "Which favorite would you like to delete?"
                 this_one = gets.strip
                 found_fav = Recipe.find_by(name: this_one).id
-                Favorite.find_by(recipe_id: found_fav, user_id: @user.id).destroy
+                UserRecipe.find_by(recipe_id: found_fav, user_id: @user.id).destroy
         # system "clear"
         # main_menu
         end
