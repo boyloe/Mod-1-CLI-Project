@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
         when "Exit"
             puts "Goodbye #{self.username}!"
             sleep(2)
-            system "exit!"  
+            system "exit"  
         end
     end
 
