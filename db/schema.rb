@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_190007) do
   create_table "recipes", force: :cascade do |t|
     t.string "name"
     t.string "ingredients"
+    t.string "href"
   end
 
   create_table "user_recipes", force: :cascade do |t|
