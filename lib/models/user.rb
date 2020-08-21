@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
         end
         prompt = TTY::Prompt.new
 
-        favs_options = ["Delete a Recipe","Return to Main Menu"]
+        favs_options = ["Check Ingredients","Display Recipe Link","Delete a Recipe","Return to Main Menu"]
         response = prompt.select("\n\nWhat would you like to do?".yellow.bold, favs_options)
         case response
             when "Return to Main Menu"
@@ -124,7 +124,7 @@ class User < ActiveRecord::Base
                 sleep(5)
                 list_favorites
 
-            when "Display Recipe Source URL"
+            when "Display Recipe Link"
                 system "clear"
                 recipe_to_check = prompt.select("Which recipe's URL do you want to see?\n",recipe_names)                
                 url = Recipe.find_by(name: recipe_to_check).href
