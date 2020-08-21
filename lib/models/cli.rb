@@ -7,9 +7,11 @@ class Cli
   end
 
   def self.login
+
     AsciiArt.welcome_logo
+
     sleep(2)
-    puts "Please Enter your Username:"
+    puts "Please Enter your Username:".cyan
     username = gets.strip
     system "clear"
     User.find_user username    
