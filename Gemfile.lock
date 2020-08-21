@@ -65,8 +65,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 6.0)
-
-  colorize (~> 0.8.1)
+  colorize
   json
   pry (~> 0.12.2)
   rake (~> 13.0)
