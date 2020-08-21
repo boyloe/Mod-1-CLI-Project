@@ -7,9 +7,9 @@ class Cli
   end
 
   def self.login
-    puts "Welcome to Recipe"
+    puts "Welcome to Recipe".cyan 
     sleep(2)
-    puts "Please Enter your Username:"
+    puts "Please Enter your Username:".cyan
     username = gets.strip
     system "clear"
     User.find_user username    

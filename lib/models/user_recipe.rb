@@ -8,9 +8,9 @@ class UserRecipe < ActiveRecord::Base
         favorite = find_by(user_id: user.id, recipe_id: recipe.id)
         if !favorite
             UserRecipe.create(user_id: user.id, recipe_id: recipe.id)
-            puts "Recipe has been saved" 
+            puts "Recipe has been saved".cyan 
         else
-            puts "This recipe is already in your favorites list!"                            
+            puts "This recipe is already in your favorites list!".cyan                            
         end
         system "clear"
         user.menu

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
         if @user
             prompt = TTY::Prompt.new
             system("clear")
-            puts "Welcome back, #{@user.username}\n\n"
+            puts "Welcome back, #{@user.username}\n\n".cyan
             sleep(1)            
             @user.menu              
         else
@@ -19,10 +19,10 @@ class User < ActiveRecord::Base
     end
 
     def self.update_user         
-        puts "What would you like to change your username to?"
+        puts "What would you like to change your username to?".yellow.bold
         new_name = gets.strip        
         @user.update(username: new_name)
-        puts "Your username has been updated."
+        puts "Your username has been updated.".cyan
         @user.menu
         
     end
@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     def self.create_new_user(user)
         
         @user = create(username: user)
-        puts "Welcome to Recipe #{@user.username}"
+        puts "Welcome to Recipe #{@user.username}".yellow.bold
         sleep(1)
         @user.menu    
     end
@@ -38,21 +38,23 @@ class User < ActiveRecord::Base
     def menu 
         prompt = TTY::Prompt.new
         menu_options = ["Find a New Recipe", "Show My Favorites","Update User", "Exit"]
-        menu_prompt = prompt.select("How Can I Help You Today?\n", menu_options)
+        menu_prompt = prompt.select("How Can I Help You Today?\n".yellow.bold, menu_options)
         sleep(1)
+        
         case menu_prompt      
-        when "Find a New Recipe" 
+        when "Find a New Recipe"
+        
             system "clear"
 
             proteins = ['Chicken','Beef','Pork','Fish']
-            protein_prompt = prompt.select("What would you like to eat?\n",proteins)
+            protein_prompt = prompt.select("What would you like to eat?\n".yellow.bold, proteins)
             recipes = Recipe.where('ingredients LIKE ?', "%#{protein_prompt}%")
             recipe_names = recipes.map do |recipe|
                 recipe.name
             end
-            recipe_prompt = prompt.select("Ok, I found these delicious recipes. Which one looks good to you?\n", recipe_names)
+            recipe_prompt = prompt.select("Ok, I found these delicious recipes. Which one looks good to you?\n".yellow.bold, recipe_names)
             
-            if prompt.yes?('Do you want add this to your Favorites?')            
+            if prompt.yes?('Do you want add this to your Favorites?'.yellow.bold)            
                 add_favorites(recipe_prompt)
                 
             else        
@@ -87,7 +89,7 @@ class User < ActiveRecord::Base
         end
         prompt = TTY::Prompt.new
         favs_options = ["Delete a Recipe","Return to Main Menu"]
-        response = prompt.select("\n\nWhat would you like to do?", favs_options)
+        response = prompt.select("\n\nWhat would you like to do?".yellow.bold, favs_options)
         case response
             when "Return to Main Menu"
                 sleep(1)
@@ -96,7 +98,7 @@ class User < ActiveRecord::Base
             when "Delete a Recipe"
                 sleep(1)
                 system "clear"
-                recipe_to_delete = prompt.select("Which recipe do you want to delete?",recipe_names)                
+                recipe_to_delete = prompt.select("Which recipe do you want to delete?".yellow.bold, recipe_names)                
                 found_favorite = Recipe.find_by(name: recipe_to_delete).id
                 UserRecipe.find_by(recipe_id: found_favorite, user_id: self).destroy
                 sleep(1)
